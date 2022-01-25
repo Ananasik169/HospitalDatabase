@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .datalist {
+          @apply max-w-sm flex flex-col justify-start items-start gap-2
+        }
+        .datalist p {
+          @apply bg-green-100 p-2 rounded-md max-w-sm 
+        }
+        .datalist__inner {
+          @apply grid grid-cols-2 gap-2 justify-between
+        }
+        .datalist__inner p {
+          @apply flex flex-col flex-wrap
+        }
+        .datalist__inner strong, a {
+          @apply w-32 overflow-hidden
+        }
+      }
+    </style>
+          <div class="bg-green-50 p-2 h-screen">
+            <div class="flex justify-between items-center">
+              <h2>{{ appointment.user_id.last_name }} {{ appointment.user_id.first_name }}</h2>
+              {% load static %}
+              <img src="{% static './picture.jpg' %}">
+            </div>
+            <div class="datalist">
+              <h3>Info:</h3>
+              <div class="datalist__inner">
+                <p><strong>Date:</strong> {{ appointment.date }}</p>
+                <p><strong>Patient's status:</strong> {{ appointment.status }}</p>
+                <p><strong>Сomplaint:</strong> {{ appointment.complaint }}</p>
+                <p><strong>Disease:</strong> {{ appointment.disease }}</p>
+                <p><strong>Prescription:</strong> {{ appointment.prescription }}</p>
+              </div>
+              <h3>Contacts:</h3>
+              <div class="datalist__inner">
+                <p><strong>E-mail:</strong> <a class="email" href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+                <p><strong>Phone:</strong> <a class="tel" href="tel:{{ user.phone_number }}">{{ user.phone_number }}</a></p>
+              </div>
+            </div>
+          </div>
+{% endblock %}

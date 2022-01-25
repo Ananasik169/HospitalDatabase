@@ -1,0 +1,73 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .datalist {
+          @apply max-w-sm flex flex-col justify-start items-start gap-2
+        }
+        .datalist p {
+          @apply bg-blue-100 p-2 rounded-md max-w-sm 
+        }
+        .datalist__inner {
+          @apply grid grid-cols-2 gap-2 justify-between
+        }
+        .datalist__inner p {
+          @apply flex flex-col flex-wrap
+        }
+        .datalist__inner strong, a {
+          @apply w-32 overflow-hidden
+        }
+      }
+    </style>
+{% if user.is_authenticated %}
+<div class="grid grid-cols-2 gap-4 w-full h-screen max-w-4xl">
+  <div class="p-4 rounded-lg w-full flex flex-col">
+    <h1>Client Database</h1>
+    <p class="description">Welcome to <em>ClientDatabase</em>, web application that help you with your work. This application is made to help you to deal with the large amount of patients. You're always in control. All the prescriptions, diagnosis and every bit of important data, everything in the same place.</p>
+  </div>
+  <div class="bg-blue-50 p-4 m-4 rounded-lg w-full flex flex-col">
+    <h2>Interesting statistics</h2>
+    <p class="description">The Database has the following record counts:</p>
+    <div class="datalist">
+      <div class="datalist">
+        <h4><strong>Patients:</strong></h4> 
+        <h4>{{ num_patients }}</h4>
+      </div>
+      <div class="datalist">
+        <h4><strong>Appointments:</strong></h4> 
+        <h4>{{ num_appointments_all }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="bg-red-50 p-4 m-4 rounded-lg w-full flex flex-col">
+    <h2>Notifications</h2>
+    <p class="description">Some sort of info that user might need to know:</p>
+    <div class="datalist">
+      <ul>
+        <li>Notification!</li>
+        <li>Notification!</li>
+        <li>Notification!</li>
+        <li>Notification!</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bg-green-50 p-4 m-4 rounded-lg w-full flex flex-col">
+    <h2>News</h2>
+    <p class="description">Something new:</p>
+    <div class="datalist">
+      <ul>
+        <li>Lorem ipsum!</li>
+        <li>Notification!</li>
+        <li>Notification!</li>
+        <li>Notification!</li>
+      </ul>
+    </div>
+  </div>
+    {% else %}
+    <div class="bg-blue-50 p-4 m-4 rounded-lg w-full flex flex-col">
+      <h1>Please login 😿</h1>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

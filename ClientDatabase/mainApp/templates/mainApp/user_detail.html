@@ -1,0 +1,48 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .datalist {
+          @apply max-w-sm flex flex-col justify-start items-start gap-2
+        }
+        .datalist p {
+          @apply bg-blue-100 p-2 rounded-md max-w-sm 
+        }
+        .datalist__inner {
+          @apply grid grid-cols-2 gap-2 justify-between
+        }
+        .datalist__inner p {
+          @apply flex flex-col flex-wrap
+        }
+        .datalist__inner strong, a {
+          @apply w-32 overflow-hidden
+        }
+      }
+    </style>
+    <h1>Me</h1>
+    <p class="description">The information you shared with the application. <br> Here is all the data about you: </p>
+          <div class="bg-blue-50 p-2 h-screen">
+            <div class="flex justify-between items-center">
+              <h2>{{ user.last_name }}  {{ user.first_name }}</h2>
+              {% load static %}
+              <img src="{% static './picture.jpg' %}">
+            </div>
+            <div class="datalist">
+              <h3>Info:</h3>
+              <div class="datalist__inner">
+
+                <p><strong>Date of birth:</strong> {{ user.date_of_birth }}</p>
+                {% if user.is_doctor %}
+                <p><strong>Specialization:</strong> {{ user.specialization }}</p>
+                <p><strong>Position:</strong> {{ user.position }}</p>
+                {% endif %}
+              </div>
+              <h3>Contacts:</h3>
+              <div class="datalist__inner">
+                <p><strong>E-mail:</strong> <a class="email" href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+                <p><strong>Phone:</strong> <a class="tel" href="tel:{{ user.phone_number }}">{{ user.phone_number }}</a></p>
+              </div>
+            </div>
+          </div>
+{% endblock %}

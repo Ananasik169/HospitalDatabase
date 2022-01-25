@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <style type="text/tailwindcss">
+      @layer utilities {
+        form {
+            @apply flex flex-col justify-center items-start gap-3 w-full
+        }
+        form label {
+            @apply font-bold
+        }
+        form select {
+            @apply border rounded-md p-2
+        }
+        form p {
+            @apply w-full grid grid-cols-2
+        }
+        form p input {
+            @apply bg-gray-100 p-2 rounded-md 
+        }
+        form p span {
+            @apply block text-gray-600 italic
+        }
+      }
+    </style>
+    <div class="max-w-4xl m-4">
+        <form autocomplete="off" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+                <input class="bg-yellow-200 p-2 rounded-md" type="submit" value="Save">
+        </form>
+    </div>
+{% endblock %}

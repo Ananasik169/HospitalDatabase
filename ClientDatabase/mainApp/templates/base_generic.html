@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  {% block title %}<title>Client Database</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style type="text/tailwindcss">
+      @layer utilities {
+        h1 { @apply text-6xl font-bold mb-4 }
+        h2 { @apply text-3xl font-bold mb-4 }
+        h3 { @apply text-gray-600 ml-2 }
+        img { @apply rounded-full w-10 h-10 border border-black border-2 mb-2 }
+        .description { @apply text-gray-400 mb-2 }
+        .side-menu { @apply flex flex-col justify-start items-start border-r mx-4 h-screen }
+        .user-menu { @apply flex flex-col justify-start items-start gap-1 p-2 w-fit bg-white }
+        .user-menu li { @apply hover:text-pink-500 duration-100 text-gray-500 }
+        .tel { @apply hover:underline decoration-wavy decoration-green-500 rounded-lg cursor-pointer }
+        .email { @apply hover:underline decoration-wavy decoration-blue-500 rounded-lg cursor-pointer }
+      }
+  </style>
+</head>
+<body>
+  <div class="flex">
+    <div class="flex">
+      <div class="side-menu">
+        <ul class="user-menu">
+           {% if user.is_authenticated %}
+              <p><span class="text-xl font-bold">Hello!</span> 👋 <span class="bg-yellow-200 p-2 mx-1 rounded-md">{{ user.get_username }}</span></p>
+              <li><a href="{% url 'mainApp:logout'%}?next={{request.path}}">Logout</a></li>
+           {% else %}
+              <p><span class="text-xl font-bold">Hello!</span> 👋 <span class="bg-yellow-200 p-2 mx-1 rounded-md">Stranger</span></p>
+             <li><a href="{% url 'mainApp:login'%}?next={{request.path}}">Login</a></li>
+           {% endif %}
+        </ul>
+      {% block sidebar %}
+      <ul class="user-menu">
+          <p class="text-xl font-bold">Menu</p>
+          <li><a href="{% url 'mainApp:index' %}">Home</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'mainApp:user-detail' user.id %}">My profile</a></li>
+          <li><a href="{% url 'mainApp:doctors' %}">Doctors</a></li>
+          <li><a href="{% url 'mainApp:appointments' %}">My appointments</a></li>
+          <li><a href="{% url 'mainApp:appointment-create' %}">Appointment create</a></li>
+          {% endif %}
+      </ul>
+     {% endblock %}
+      </div>
+      <div>
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

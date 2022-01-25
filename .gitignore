@@ -1,0 +1,9 @@
+.idea
+*initial.py
+ClientDatabase/db.sqlite3
+ClientDatabase/mainApp/migrations/*
+ClientDatabase/mainApp/users/photos/*
+ClientDatabase/mainApp/users/analyzes/*
+ClientDatabase/api/migrations/*
+ClientDatabase/myFile.py
+/env/*

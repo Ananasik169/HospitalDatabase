@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="flex flex-col">
+    <h1>My Appointments</h1>
+    <p class="description">The list of appointments running right now. <br> You can pick a patient from the block below: </p>
+    <ul class="grid grid-cols-3">
+    
+      {% for appointment in appointment_list %}
+        {% if user.is_doctor == True %}
+            {% if appointment.doctor_id == user %}
+            <a class="odd:bg-green-50 even:bg-red-50 hover:odd:bg-green-100 hover:even:bg-red-100 duration-100" href="{% url 'mainApp:appointment-detail' appointment.id %}">
+                <div class="p-2 h-fit w-80">
+                    <div class="p-2 m-2 rounded-sm h-80">
+                        <h2>{{ appointment.user_id.first_name }} {{ appointment.user_id.last_name }}</h2>
+                            {% load static %}
+                            <img src="{% static './picture.jpg' %}">
+                        <div class="flex flex-col gap-1">
+                          <p><strong>Date:</strong> {{ appointment.date }}</p>
+                          <p><strong>Patient's status:</strong> {{ appointment.status }}</p>
+                          <p><strong>Сomplaint:</strong> {{ appointment.complaint }}</p>
+                          <p><strong>Disease:</strong> {{ appointment.disease }}</p>
+                          <p><strong>Prescription:</strong> {{ appointment.prescription }}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+        {% else %}
+            {% if appointment.user_id == user %}
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
